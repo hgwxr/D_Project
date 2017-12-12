@@ -191,7 +191,7 @@ public class DSqlHelper extends SQLiteOpenHelper {
         ArrayList<TransEntity> transEntities = new ArrayList<>();
 
         try {
-            cursor = db.query(TABLE_NAME, null, whereBuffer.toString(), null, null, null, null);
+            cursor = db.query(TABLE_TRANSACTION, null, whereBuffer.toString(), null, null, null, null);
             while (cursor.moveToNext()) {
                 int count = cursor.getColumnCount();
                 String columName = cursor.getColumnName(0);
@@ -224,7 +224,7 @@ public class DSqlHelper extends SQLiteOpenHelper {
     public ArrayList<TransEntity> queryTransData(long time) {
         StringBuilder whereBuffer = new StringBuilder();
         //生成条件语句
-        whereBuffer.append(TRANS_TIME).append(" = ").append("'").append(time).append("'");
+        whereBuffer.append(TRANS_TIME).append(" > ").append(time);
         //指定要查询的是哪几列数据
 //        String[] columns = {FIELD_NAME};
         //获取可读数据库
@@ -234,7 +234,7 @@ public class DSqlHelper extends SQLiteOpenHelper {
         ArrayList<TransEntity> transEntities = new ArrayList<>();
 
         try {
-            cursor = db.query(TABLE_NAME, null, whereBuffer.toString(), null, null, null, null);
+            cursor = db.query(TABLE_TRANSACTION, null, whereBuffer.toString(), null, null, null, null);
             while (cursor.moveToNext()) {
                 int count = cursor.getColumnCount();
                 String columName = cursor.getColumnName(0);

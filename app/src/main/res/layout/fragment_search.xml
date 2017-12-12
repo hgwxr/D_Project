@@ -6,22 +6,33 @@
 
     <LinearLayout
         android:id="@+id/header_tab"
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <EditText
+            android:id="@+id/search_et_category"
+            android:layout_weight="3"
+            android:layout_width="0dp"
+            android:hint="输入分类搜索"
+            android:layout_height="wrap_content" />
         <Button
             android:id="@+id/search_category"
-            android:layout_width="70dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="分类搜索"
             android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/search_time"
-            android:layout_width="70dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="按时间搜索"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <ListView
         android:id="@+id/search_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

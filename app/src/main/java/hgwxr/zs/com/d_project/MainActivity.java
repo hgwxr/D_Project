@@ -25,16 +25,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mDSqlHelper = DSqlHelper.instance(this);
-        mDSqlHelper.insertTransData(100,"c1");
-        mDSqlHelper.insertTransData(100,"c2");
-        mDSqlHelper.insertTransData(100,"c3");
-        mDSqlHelper.insertTransData(100,"c4");
+//        mDSqlHelper.insertTransData(100,"c1");
+//        mDSqlHelper.insertTransData(100,"c2");
+//        mDSqlHelper.insertTransData(100,"c3");
+//        mDSqlHelper.insertTransData(100,"c4");
 //        dSqlHelper.insertUserData("admin1","admin1");
-        mDSqlHelper.insertUserData("admin","admin1");
+        User admin = mDSqlHelper.queryUser("admin");
+        if (admin==null) {
+            mDSqlHelper.insertUserData("admin", "admin1");
 //        ArrayList<User> users = dSqlHelper.queryUsers();
-        mDSqlHelper.updateUserData(1,"admin","123");
-        //User admin = dSqlHelper.queryUser("admin");
+            mDSqlHelper.updateUserData(1, "admin", "123");
+            //User admin = dSqlHelper.queryUser("admin");
 //        Log.e("TAG", "onCreate: " );
+        }
         etUser = ((EditText) findViewById(R.id.tv_name));
         etPsd = ((EditText) findViewById(R.id.tv_psd));
     }
