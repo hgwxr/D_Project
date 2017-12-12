@@ -1,12 +1,20 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="hgwxr.zs.com.d_project.ui.UserMoudleFragment">
 
+    <TextView
+        android:id="@+id/tv_insert"
+        android:text="添加"
+        android:gravity="center"
+        android:background="@color/colorAccent"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
     <ListView
+        android:layout_below="@id/tv_insert"
         android:id="@+id/user_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-</FrameLayout>
+</RelativeLayout>

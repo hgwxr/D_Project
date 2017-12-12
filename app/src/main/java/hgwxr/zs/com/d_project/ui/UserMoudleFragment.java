@@ -45,9 +45,17 @@ public class UserMoudleFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ListView userList = view.findViewById(R.id.user_list);
+        view.findViewById(R.id.tv_insert).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UserDialog userDialog = new UserDialog(getContext());
+                userDialog.setFragment(UserMoudleFragment.this);
+                userDialog.show();
+            }
+        });
         userAdapter = new UserAdapter(getContext());
         userList.setAdapter(userAdapter);
-        dSqlHelper = new DSqlHelper(getContext());
+        dSqlHelper = DSqlHelper.instance(getContext());
         final ArrayList<User> users = dSqlHelper.queryUsers();
         userAdapter.addAll(users);
         userList.setOnItemClickListener(new AdapterView.OnItemClickListener() {

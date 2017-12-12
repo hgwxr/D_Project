@@ -24,12 +24,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mDSqlHelper = new DSqlHelper(this);
+        mDSqlHelper = DSqlHelper.instance(this);
         mDSqlHelper.insertTransData(100,"c1");
+        mDSqlHelper.insertTransData(100,"c2");
+        mDSqlHelper.insertTransData(100,"c3");
+        mDSqlHelper.insertTransData(100,"c4");
 //        dSqlHelper.insertUserData("admin1","admin1");
-//        dSqlHelper.insertUserData("admin","admin1");
+        mDSqlHelper.insertUserData("admin","admin1");
 //        ArrayList<User> users = dSqlHelper.queryUsers();
-//        dSqlHelper.updateUserData(1,"admin","123");
+        mDSqlHelper.updateUserData(1,"admin","123");
         //User admin = dSqlHelper.queryUser("admin");
 //        Log.e("TAG", "onCreate: " );
         etUser = ((EditText) findViewById(R.id.tv_name));
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         if (user!=null&& TextUtils.equals(user.getPsd(),etPsd.getText().toString())){
             Intent intent = new Intent(this, ManagerActivity.class);
             startActivity(intent);
+            finish();
         }else{
             Toast.makeText(this,"登陆失败",Toast.LENGTH_LONG).show();
         }

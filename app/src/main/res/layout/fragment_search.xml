@@ -1,12 +1,30 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="hgwxr.zs.com.d_project.ui.SearchFragment">
 
-   <android.support.v7.widget.RecyclerView
-       android:id="@+id/search_list"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"/>
+    <LinearLayout
+        android:id="@+id/header_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-</FrameLayout>
+        <Button
+            android:id="@+id/search_category"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/search_time"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/search_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/header_tab" />
+
+</RelativeLayout>

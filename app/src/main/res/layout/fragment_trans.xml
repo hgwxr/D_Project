@@ -1,12 +1,43 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="hgwxr.zs.com.d_project.ui.TransFragment">
-
-   <android.support.v7.widget.RecyclerView
+<LinearLayout
+    android:id="@+id/header_tab"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+   <Button
+       android:id="@+id/trans_insert"
+       android:text="增加"
+       android:layout_weight="1"
+       android:layout_width="0dp"
+       android:layout_height="wrap_content" />
+   <Button
+       android:visibility="invisible"
+       android:id="@+id/trans_update"
+       android:text="修改"
+       android:layout_weight="1"
+       android:layout_width="0dp"
+       android:layout_height="wrap_content" />
+   <Button
+       android:visibility="invisible"
+       android:id="@+id/trans_delete"
+       android:text="删除"
+       android:layout_weight="1"
+       android:layout_width="0dp"
+       android:layout_height="wrap_content" />
+   <Button
+       android:text="增加"
+       android:layout_weight="1"
+       android:visibility="invisible"
+       android:layout_width="0dp"
+       android:layout_height="wrap_content" />
+</LinearLayout>
+   <ListView
+       android:layout_below="@id/header_tab"
        android:id="@+id/trans_list"
        android:layout_width="match_parent"
        android:layout_height="match_parent"/>
 
-</FrameLayout>
+</RelativeLayout>

@@ -33,18 +33,20 @@ public class DSqlHelper extends SQLiteOpenHelper {
     public DSqlHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
-    public static DSqlHelper instance(Context context){
-      if (mDsql==null){
-          synchronized (DSqlHelper.class){
-              if (mDsql==null){
-                  mDsql=new DSqlHelper(context);
-              }
-          }
-      }
-      return mDsql;
+
+    public static DSqlHelper instance(Context context) {
+        if (mDsql == null) {
+            synchronized (DSqlHelper.class) {
+                if (mDsql == null) {
+                    mDsql = new DSqlHelper(context);
+                }
+            }
+        }
+        return mDsql;
     }
 
-    private  static DSqlHelper mDsql;
+    private static DSqlHelper mDsql;
+
     /**
      * 创建数据库
      *
@@ -92,12 +94,36 @@ public class DSqlHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public int updateTrans(TransEntity entity){
+        //生成条件语句
+        StringBuilder sb = new StringBuilder();
+        sb.append(" " + FIELD_ID + " = " + entity.getId());
+        //生成要修改或者插入的键值
+        ContentValues cv = new ContentValues();
+        cv.put(TRANS_TIME, System.currentTimeMillis());
+        cv.put(TRANS_MONEY, entity.getMoney());
+        cv.put(TRANS_CATEGORY, entity.getCategoryName());
+        //获取写数据库
+        SQLiteDatabase db = getWritableDatabase();
+        // update 操作
+        int update = db.update(TABLE_TRANSACTION, cv, sb.toString(), null);
+        //关闭数据库
+        db.close();
+        return update;
+    }
+    public  int deleteTrans(int id){
+        //获取写数据库
+        SQLiteDatabase db = getWritableDatabase();
+        int delete = db.delete(TABLE_TRANSACTION, " " + FIELD_ID + " = " + id, null);
+        db.close();
+        return delete;
+    }
     public void insertTransData(long money, String cName) {
         //获取写数据库
         SQLiteDatabase db = getWritableDatabase();
         //生成要修改或者插入的键值
         ContentValues cv = new ContentValues();
-        //cv.put(TRANS_TIME, System.currentTimeMillis());
+        cv.put(TRANS_TIME, System.currentTimeMillis());
         cv.put(TRANS_CATEGORY, cName);
         cv.put(TRANS_MONEY, money);
         // insert 操作
@@ -112,10 +138,46 @@ public class DSqlHelper extends SQLiteOpenHelper {
 
     public User queryUser(String name) {
         ArrayList<User> users = queryUserData(name);
-        return users.size() !=0 ? users.get(0) : null;
+        return users.size() != 0 ? users.get(0) : null;
 
     }
+    public ArrayList<TransEntity> queryTransDatas(){
+        //获取可读数据库
+        SQLiteDatabase db = getReadableDatabase();
+        //查询数据库
+        Cursor cursor = null;
+        ArrayList<TransEntity> transEntities = new ArrayList<>();
 
+        try {
+            cursor = db.query(TABLE_TRANSACTION, null, null, null, null, null, null);
+            while (cursor.moveToNext()) {
+                int count = cursor.getColumnCount();
+                String columName = cursor.getColumnName(0);
+                int idIndex = cursor.getColumnIndex(FIELD_ID);
+                int categoryIndex = cursor.getColumnIndex(TRANS_CATEGORY);
+                int moneyIndex = cursor.getColumnIndex(TRANS_MONEY);
+                int timeIndex = cursor.getColumnIndex(TRANS_TIME);
+                String tname = cursor.getString(0);
+                Log.e(TAG, "count = " + count + " columName = " + columName + "  name =  " + tname);
+                TransEntity transEntity = new TransEntity();
+                transEntity.setId(cursor.getInt(idIndex));
+                transEntity.setCategoryName(cursor.getString(categoryIndex));
+                transEntity.setMoney(cursor.getLong(moneyIndex));
+                transEntity.setTime(cursor.getLong(timeIndex));
+                transEntities.add(transEntity);
+            }
+
+        } catch (SQLException e) {
+            Log.e(TAG, "queryDatas" + e.toString());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+            //关闭数据库
+            db.close();
+        }
+        return transEntities;
+    }
     public ArrayList<TransEntity> queryTransData(String cName) {
         StringBuilder whereBuffer = new StringBuilder();
         //生成条件语句
@@ -158,6 +220,7 @@ public class DSqlHelper extends SQLiteOpenHelper {
         }
         return transEntities;
     }
+
     public ArrayList<TransEntity> queryTransData(long time) {
         StringBuilder whereBuffer = new StringBuilder();
         //生成条件语句
